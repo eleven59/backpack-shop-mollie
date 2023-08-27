@@ -1,0 +1,47 @@
+{
+    "name": "eleven59/backpack-shop-mollie",
+    "description": "Handy dandy Mollie payments trait for my BackpackShop package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "eleven59.nl",
+            "email": "info@eleven59.nl",
+            "homepage": "https://eleven59.nl"
+        }
+    ],
+    "homepage": "https://github.com/eleven59/backpack-shop-mollie",
+    "keywords": [
+        "Laravel", "Backpack", "Backpack for Laravel", "Backpack Addon", "BackpackShopMollie"
+    ],
+    "require": {
+        "illuminate/support": "~8|~9",
+        "backpack/crud": "^5.0.0",
+        "backpack/pro": "^1.0.0",
+        "eleven59/backpack-shop": "*",
+        "mollie/laravel-mollie": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~5|~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eleven59\\BackpackShopMollie\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eleven59\\BackpackShopMollie\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eleven59\\BackpackShopMollie\\AddonServiceProvider"
+            ]
+        }
+    }
+}
