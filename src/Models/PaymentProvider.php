@@ -77,7 +77,7 @@ class PaymentProvider extends \Eleven59\BackpackShop\PaymentProvider
     public static function createPayment(array $order_data) :bool|array
     {
         $payment_description = config('eleven59.backpack-shop.payment-description') ??
-            __('eleven59.backpack-shop::order.payment-description', [':store_name' => env('APP_NAME')]);
+            __('backpack-shop::order.payment-description', [':store_name' => env('APP_NAME')]);
 
         $webhook_url = $order_data['webhook_url'] ??
             env('APP_URL') . config('eleven59.backpack-shop-mollie.webhook_url', '/mollie/webhook');
