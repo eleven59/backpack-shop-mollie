@@ -32,7 +32,7 @@ class PaymentProvider extends \Eleven59\BackpackShop\PaymentProvider
     public static function getPaymentMethods(array $options = []) :array
     {
         $options = array_merge($options, [
-            "sequenceType" => "first",
+//            "sequenceType" => "first",
             "locale" => config('eleven59.backpack-shop-mollie.locale', 'nl_NL'),
             "include" => "issuers",
         ]);
