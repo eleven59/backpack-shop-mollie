@@ -20,7 +20,7 @@ class PaymentProvider extends \Eleven59\BackpackShop\PaymentProvider
         'paid' => 'paid',
         'unknown' => 'new',
     ];
-    public const DEPENDENCIES = ["ideal_issuer"];
+    public const DEPENDENCIES = [];
 
     /**
      * @param array $options
@@ -34,7 +34,7 @@ class PaymentProvider extends \Eleven59\BackpackShop\PaymentProvider
         $options = array_merge($options, [
             "sequenceType" => "first",
             "locale" => config('eleven59.backpack-shop-mollie.locale', 'nl_NL'),
-            "include" => "issuers",
+//            "include" => "issuers",
         ]);
 
         try {
@@ -50,19 +50,19 @@ class PaymentProvider extends \Eleven59\BackpackShop\PaymentProvider
                 'description' => $paymentMethod->description,
                 'dependencies' => [],
             ];
-            if (!empty($paymentMethod->issuers)) {
-                $methods[$paymentMethod->id]['dependencies']['issuers'] = [
-                    'id' => $paymentMethod->id . '-issuers',
-                    'name' => $paymentMethod->id . '_issuer',
-                    'values' => [],
-                ];
-                foreach($paymentMethod->issuers as $issuer) {
-                    $methods[$paymentMethod->id]['dependencies']['issuers']['values'][$issuer->id] = [
-                        'id' => $issuer->id,
-                        'description' => $issuer->name,
-                    ];
-                }
-            }
+//            if (!empty($paymentMethod->issuers)) {
+//                $methods[$paymentMethod->id]['dependencies']['issuers'] = [
+//                    'id' => $paymentMethod->id . '-issuers',
+//                    'name' => $paymentMethod->id . '_issuer',
+//                    'values' => [],
+//                ];
+//                foreach($paymentMethod->issuers as $issuer) {
+//                    $methods[$paymentMethod->id]['dependencies']['issuers']['values'][$issuer->id] = [
+//                        'id' => $issuer->id,
+//                        'description' => $issuer->name,
+//                    ];
+//                }
+//            }
         }
 
         return $methods;
@@ -100,10 +100,10 @@ class PaymentProvider extends \Eleven59\BackpackShop\PaymentProvider
             ],
         ];
 
-        if ($order_data['payment_method'] === PaymentMethod::IDEAL)
-        {
-            $payload['issuer'] = $order_data['ideal_issuer'] ?? null;
-        }
+//        if ($order_data['payment_method'] === PaymentMethod::IDEAL)
+//        {
+//            $payload['issuer'] = $order_data['ideal_issuer'] ?? null;
+//        }
 
 //        try {
 //        dd($payload);

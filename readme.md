@@ -50,62 +50,62 @@ This is pretty straightforward. The [eleven59/backpack-shop](https://github.com/
 This package automatically gets the enabled and active methods from Mollie, so whichever methods are active in your Mollie dashboard should automatically show up here and work perfectly.
 
 
-## Displaying Issuers and other dependencies
-
-This is completely optional, as Mollie allows you to just specify the payment method and will make you pick an issuer on their end when it is not specified here. The [eleven59/backpack-shop](https://github.com/eleven59/backpack-shop), however, also allows you to make customers pick the issuer within your site. This also skips the Mollie branded screen that would otherwise interrupt your customer's experience.
-
-Here's how to:
-
-**Step 1.** Add class to the payment method selector to indicate that it has dependencies
-
-```injectablephp
-<select name="payment_method" class="has-dependencies">
-    @foreach(shoppingcart()->getPaymentMethods() as $method)
-        <option value="{{ $method['id'] }}" {{ old('payment_method', 'ideal') === $method['id'] ? 'selected' : '' }}>{{ $method['description'] }}</option>
-    @endforeach
-</select>
-```
-
-**Step 2.** Add a field for the dependencies
-
-This field is initially hidden – we will make sure it gets displayed below
-
-```injectablephp
-@foreach(shoppingcart()->getPaymentMethods() as $method)
-    @if(!empty($method['dependencies']))
-        @foreach($method['dependencies'] as $dependency)
-            <select class="select2 payment-method-dependent payment-method-{{ $method['id'] }}-dependent" style="display: none;" name="{{ $dependency['name'] }}" id="{{ $dependency['id'] }}" data-minimum-results-for-search="-1">
-                @foreach($dependency['values'] as $values)
-                    <option value="{{ $values['id'] }}" {{ old($dependency['name'], 'ideal_ABNANL2A') === $values['id'] ? 'selected' : '' }}>{{ $values['description'] }}</option>
-                @endforeach
-            </select>
-        @endforeach
-    @endif
-@endforeach
-```
-
-This code will automatically show the issuers with the correct field name for Mollie to process them when submitting the request.
-
-**Step 3.** Add JS to show/hide the dependent fields dynamically
-
-I'm using jQuery here, because I'm lazy like that.
-
-```javascript
-// Define onChange function
-$(document).on('change', '.has-dependencies', function() {
-    let parent = $(this).attr('id'),
-        val = $(this).val();
-    
-    // First, hide all dependent fields
-    $(`.${parent}-dependent`).css('display', 'none');
-    
-    // Then, show only those that match the current selection
-    $(`.${parent}-${val}-dependent`).css('display', '');
-});
-
-// Trigger for initial selection
-$('.has-dependencies').trigger('change');
-```
+[//]: # (## Displaying Issuers and other dependencies)
+[//]: # ()
+[//]: # (This is completely optional, as Mollie allows you to just specify the payment method and will make you pick an issuer on their end when it is not specified here. The [eleven59/backpack-shop]&#40;https://github.com/eleven59/backpack-shop&#41;, however, also allows you to make customers pick the issuer within your site. This also skips the Mollie branded screen that would otherwise interrupt your customer's experience.)
+[//]: # ()
+[//]: # (Here's how to:)
+[//]: # ()
+[//]: # (**Step 1.** Add class to the payment method selector to indicate that it has dependencies)
+[//]: # ()
+[//]: # (```injectablephp)
+[//]: # (<select name="payment_method" class="has-dependencies">)
+[//]: # (    @foreach&#40;shoppingcart&#40;&#41;->getPaymentMethods&#40;&#41; as $method&#41;)
+[//]: # (        <option value="{{ $method['id'] }}" {{ old&#40;'payment_method', 'ideal'&#41; === $method['id'] ? 'selected' : '' }}>{{ $method['description'] }}</option>)
+[//]: # (    @endforeach)
+[//]: # (</select>)
+[//]: # (```)
+[//]: # ()
+[//]: # (**Step 2.** Add a field for the dependencies)
+[//]: # ()
+[//]: # (This field is initially hidden – we will make sure it gets displayed below)
+[//]: # ()
+[//]: # (```injectablephp)
+[//]: # (@foreach&#40;shoppingcart&#40;&#41;->getPaymentMethods&#40;&#41; as $method&#41;)
+[//]: # (    @if&#40;!empty&#40;$method['dependencies']&#41;&#41;)
+[//]: # (        @foreach&#40;$method['dependencies'] as $dependency&#41;)
+[//]: # (            <select class="select2 payment-method-dependent payment-method-{{ $method['id'] }}-dependent" style="display: none;" name="{{ $dependency['name'] }}" id="{{ $dependency['id'] }}" data-minimum-results-for-search="-1">)
+[//]: # (                @foreach&#40;$dependency['values'] as $values&#41;)
+[//]: # (                    <option value="{{ $values['id'] }}" {{ old&#40;$dependency['name'], 'ideal_ABNANL2A'&#41; === $values['id'] ? 'selected' : '' }}>{{ $values['description'] }}</option>)
+[//]: # (                @endforeach)
+[//]: # (            </select>)
+[//]: # (        @endforeach)
+[//]: # (    @endif)
+[//]: # (@endforeach)
+[//]: # (```)
+[//]: # ()
+[//]: # (This code will automatically show the issuers with the correct field name for Mollie to process them when submitting the request.)
+[//]: # ()
+[//]: # (**Step 3.** Add JS to show/hide the dependent fields dynamically)
+[//]: # ()
+[//]: # (I'm using jQuery here, because I'm lazy like that.)
+[//]: # ()
+[//]: # (```javascript)
+[//]: # (// Define onChange function)
+[//]: # ($&#40;document&#41;.on&#40;'change', '.has-dependencies', function&#40;&#41; {)
+[//]: # (    let parent = $&#40;this&#41;.attr&#40;'id'&#41;,)
+[//]: # (        val = $&#40;this&#41;.val&#40;&#41;;)
+[//]: # (    )
+[//]: # (    // First, hide all dependent fields)
+[//]: # (    $&#40;`.${parent}-dependent`&#41;.css&#40;'display', 'none'&#41;;)
+[//]: # (    )
+[//]: # (    // Then, show only those that match the current selection)
+[//]: # (    $&#40;`.${parent}-${val}-dependent`&#41;.css&#40;'display', ''&#41;;)
+[//]: # (}&#41;;)
+[//]: # ()
+[//]: # (// Trigger for initial selection)
+[//]: # ($&#40;'.has-dependencies'&#41;.trigger&#40;'change'&#41;;)
+[//]: # (```)
 
 ## Change log
 
